@@ -33,7 +33,6 @@ export class AuthService {
     return user;
   }
 
-  
   async signin(email: string, password: string) {
     const [user] = await this.userService.find(email);
     if (!user) {
@@ -42,9 +41,10 @@ export class AuthService {
     const [salt, storedHash] = user.password.split('.');
     const hash = (await scrypt(password, salt, 32)) as Buffer;
     if (storedHash !== hash.toString('hex')) {
-        throw new BadRequestException('incorrect password, please try again.');
-    } 
-    return user;
+      throw new BadRequestException('incorrect password, please try again.');
     }
+    return user;
   }
+}
+
 

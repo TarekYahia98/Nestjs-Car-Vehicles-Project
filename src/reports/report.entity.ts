@@ -1,4 +1,6 @@
+import { User } from '../users/user.entity';
 import {
+  ManyToOne,
   Entity,
   Column,
   PrimaryGeneratedColumn,
@@ -33,7 +35,8 @@ export class Report {
   @Column()
   mileage: number;
 
-
+  @ManyToOne(() => User , (user) => user.reports)
+  user: User;
 
   // Hooks
   @AfterInsert()

@@ -19,11 +19,11 @@ export class CreateReportDto {
   @Max(2050)
   year: number;
 
-  @IsNotEmpty()
+ 
   @IsLongitude()
   long: number;             //longitude
 
-  @IsNotEmpty()
+  
   @IsLatitude()
   lat: number;              //latitude
 
