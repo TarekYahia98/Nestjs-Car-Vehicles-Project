@@ -7,6 +7,9 @@ export class User {
    @PrimaryGeneratedColumn()
    id:number;
 
+   @Column({ default: true })
+   Admin: boolean;
+
    @Column()
    email:string;
 
@@ -24,6 +27,6 @@ export class User {
    logUpdate() {console.log (`Updated User with id ${this.id}`)};
 
    @AfterRemove()
-   logRemove() {console.log (`Removed User with id ${this.id}`)};
+   logRemove() {console.log (`Removed User with Email ${this.email}`)};
 
 }

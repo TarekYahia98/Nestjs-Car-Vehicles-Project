@@ -17,31 +17,36 @@ import { CurrentUser } from '../users/decorators/current-user.decorator';
 import { User } from '../users/user.entity';
 import { ReportDto } from './dtos/report.dto';
 import { serialize } from '../interceptors/serialize.interceptor';
+import { ApproveReportDto } from './dtos/approve-report.dto';
+import { AdminGuard } from '../guards/admin.guard';
 
 
 @Controller('reports')
 export class ReportsController {
-  constructor(private readonly reportService: ReportsService) {}
+  constructor(private readonly reportsService: ReportsService) {}
 
   @Post('/newReport')
   @UseGuards(AuthGuard)
   @serialize(ReportDto)
   createReport(@Body() body: CreateReportDto, @CurrentUser() user: User) {
-    return this.reportService.create(body, user);
+    return this.reportsService.create(body, user);
   }
 
   // @Get()
-  // estimateValue(@Query()){
-
+  // estimateValue(@Query('')){
+    
   // }
 
-  // @Patch()
-  // approveReport(@Param('id') id:string, @Body() body: UpdateReportDto){
+  
+  @Patch('/:id')
+  @UseGuards(AdminGuard)
+  approveReport(@Param('id') id:string, @Body() body: ApproveReportDto){
+    return this.reportsService.changeApproval(id,body.approved);
 
-  // }
+  }
 
   @Delete('/:id')
   removeReportById(@Param('id') id:string){
-    return this.reportService.remove(parseInt(id));
+    return this.reportsService.remove(parseInt(id));
   }
 }

@@ -3,6 +3,8 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { promisify } from 'util';
+import { randomBytes, scrypt as _scrypt } from 'crypto';
 
 @Injectable()
 export class UsersService {
@@ -36,6 +38,11 @@ export class UsersService {
       throw new NotFoundException('User Not Found');
     }
     Object.assign(user, body);
+    const scrypt = promisify(_scrypt);
+    const salt = randomBytes(8).toString('hex');
+    const hash = (await scrypt(body.password, salt, 32)) as Buffer;
+    const result = salt + '.' + hash.toString('hex');
+    user.password = result
     return this.userRepo.save(user);
   }
 
