@@ -8,7 +8,7 @@ export class User {
    id:number;
 
    @Column({ default: true })
-   Admin: boolean;
+   admin: boolean;
 
    @Column()
    email:string;
