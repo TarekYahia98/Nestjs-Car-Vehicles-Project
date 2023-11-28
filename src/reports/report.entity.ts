@@ -1,4 +1,6 @@
+import { User } from '../users/user.entity';
 import {
+  ManyToOne,
   Entity,
   Column,
   PrimaryGeneratedColumn,
@@ -11,6 +13,9 @@ import {
 export class Report {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({ default: false })
+  approved: boolean;
 
   @Column()
   price: number;
@@ -25,15 +30,16 @@ export class Report {
   year: number;
 
   @Column()
-  long: number;               //longitude
+  long: number; //longitude
 
   @Column()
-  lat: number;               //latitude
+  lat: number; //latitude
 
   @Column()
   mileage: number;
 
-
+  @ManyToOne(() => User, (user) => user.reports)
+  user: User;
 
   // Hooks
   @AfterInsert()
@@ -43,11 +49,15 @@ export class Report {
 
   @AfterUpdate()
   logUpdate() {
-    console.log(`Updated Report with id ${this.id}`);
+    if (this.approved === true) {
+      console.log(`Approved Report with id ${this.id}`);
+    } else {
+      console.log(`Rejected Report with id ${this.id}`);
+    }
   }
 
   @AfterRemove()
   logRemove() {
-    console.log(`Removed Report with id ${this.id}`);
+    console.log(`Removed Report`);
   }
 }

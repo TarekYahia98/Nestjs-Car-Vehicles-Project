@@ -1,3 +1,5 @@
+// check if user signed in before Making any Request
+
 import { CanActivate, ExecutionContext } from "@nestjs/common";
 
 export class AuthGuard implements CanActivate {

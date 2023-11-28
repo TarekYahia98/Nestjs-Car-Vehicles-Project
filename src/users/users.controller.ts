@@ -10,20 +10,16 @@ import {
   Delete,
   Patch,
   UseGuards,
-  Request,
 } from '@nestjs/common';
 import { createUserDto } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { serialize } from '../interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
-import { AuthService } from './auth.service';
+import { AuthService } from './auth.service'; 
 import { User } from './user.entity';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { AuthGuard } from '../guards/auth.guard';
-import { request } from 'express';
-
-
 
 @Controller('auth')
 //  @UseInterceptors(new SerializeInterceptor(UserDto))
@@ -54,7 +50,7 @@ export class UsersController {
   // }
 
   // using Custom Decorator + Interceptor For Getting Currently Signin User
-  
+
   @Get('/users')
   findAllUsers() {
     return this.usersService.findUsers();
@@ -71,13 +67,12 @@ export class UsersController {
     session.userId = null;
   }
 
-
   @Get('/:id')
   async findUserById(@Param('id') id: string) {
     const user = await this.usersService.findOne(parseInt(id));
-    // if (!user) {
-    //   throw new NotFoundException('User Not Found');
-    // }
+    if (!user) {
+      throw new NotFoundException('User Not Found');
+    }
     return user;
   }
 
@@ -85,8 +80,6 @@ export class UsersController {
   findUserByEmail(@Query('email') email: string) {
     return this.usersService.find(email);
   }
-
-
 
   @Patch('/:id')
   updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {

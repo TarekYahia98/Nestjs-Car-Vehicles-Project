@@ -1,15 +1,23 @@
-import { AfterInsert, AfterRemove, AfterUpdate, Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {OneToMany, AfterInsert, AfterRemove, AfterUpdate, Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Report } from '../reports/report.entity';
+
 
 @Entity()
 export class User {
    @PrimaryGeneratedColumn()
    id:number;
 
+   @Column({ default: true })
+   admin: boolean;
+
    @Column()
    email:string;
 
    @Column()
    password:string;
+
+   @OneToMany(()=> Report , (report) => report.user)
+   reports: Report[];
 
    // Hooks
    @AfterInsert()
@@ -19,6 +27,6 @@ export class User {
    logUpdate() {console.log (`Updated User with id ${this.id}`)};
 
    @AfterRemove()
-   logRemove() {console.log (`Removed User with id ${this.id}`)};
+   logRemove() {console.log (`Removed User with Email ${this.email}`)};
 
 }

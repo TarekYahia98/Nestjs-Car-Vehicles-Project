@@ -1,3 +1,5 @@
+// To Limit our info Shared
+
 import { UseInterceptors, NestInterceptor, ExecutionContext, CallHandler } from "@nestjs/common";
 import { Observable} from "rxjs";
 import { map,} from 'rxjs/operators';
@@ -9,7 +11,7 @@ interface ClassConstructor {
 }
 
 
-// Custom Decorator For SerializeInterceptor => => @UseInterceptors(new SerializeInterceptor(UserDto))
+// Custom Decorator For SerializeInterceptor => (instead of using that) => @UseInterceptors(new SerializeInterceptor(UserDto))
 export function serialize(dto: ClassConstructor) {
   return UseInterceptors(new SerializeInterceptor(dto));
 }
