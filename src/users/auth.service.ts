@@ -6,12 +6,17 @@ import {
 import { UsersService } from './users.service';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
+import { User } from './user.entity';
+import { JwtService } from '@nestjs/jwt';
 
 const scrypt = promisify(_scrypt);
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UsersService) {}
+  constructor(
+    private readonly userService: UsersService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async signup(email: string, password: string) {
     // See if email is Used in DB
@@ -45,6 +50,31 @@ export class AuthService {
     }
     return user;
   }
+
+  async login(user: User) {
+    const payload = { sub: user.id, email: user.email };
+    return {
+      ...user,
+      accessToken: this.jwtService.sign(payload, {
+        secret: process.env.jwt_secret,
+      }),
+      refreshToken: this.jwtService.sign(payload, {
+        expiresIn: '7d',
+        secret: process.env.jwt_secret,
+      }),
+    };
+  }
+
+  async refreshToken(user: User) {
+    const payload = { sub: user.id, email: user.email };
+    return {
+      accessToken: this.jwtService.sign(payload, {
+        secret: process.env.jwt_secret,
+      }),
+      refreshToken: this.jwtService.sign(payload, {
+        expiresIn: '7d',
+        secret: process.env.jwt_secret,
+      }),
+    };
+  }
 }
-
-

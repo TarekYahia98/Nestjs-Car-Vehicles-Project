@@ -1,8 +1,7 @@
-// DTO For Outing User Entity instance Response
 import { Expose } from 'class-transformer';
 
 
-export class UserDto {
+export class tokensDto {
   
  @Expose()
  id: number;
@@ -12,5 +11,10 @@ export class UserDto {
 
  @Expose()
  admin: Boolean;
- 
+
+ @Expose()
+ accessToken: String;
+
+ @Expose()
+ refreshToken: String;
 }

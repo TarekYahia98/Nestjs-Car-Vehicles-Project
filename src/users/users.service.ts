@@ -42,7 +42,7 @@ export class UsersService {
     const salt = randomBytes(8).toString('hex');
     const hash = (await scrypt(body.password, salt, 32)) as Buffer;
     const result = salt + '.' + hash.toString('hex');
-    user.password = result
+    user.password = result;
     return this.userRepo.save(user);
   }
 
