@@ -84,11 +84,11 @@ export class AuthService {
 
 async sendMail() {
   this.mailerService.sendMail({
-    to:'ahmed.h.mohamed98@gmail.com',
+    to:'tarek.yahia.20080@gmail.com',
     from: 'eng.tarek.yahiia@gmail.com',
     subject: 'complete signup by verifying Email your email',
     text: '',
-    html: '<h1>Welcome ahmed</h1>',
+    html: '<h1>Welcome Eng.Tarek Yahia Abo Eldahab</h1>',
   })
 }
 
