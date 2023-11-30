@@ -8,6 +8,7 @@ import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
 import { User } from './user.entity';
 import { JwtService } from '@nestjs/jwt';
+import { MailerService } from '@nestjs-modules/mailer';
 
 const scrypt = promisify(_scrypt);
 
@@ -16,6 +17,7 @@ export class AuthService {
   constructor(
     private readonly userService: UsersService,
     private readonly jwtService: JwtService,
+    private readonly mailerService: MailerService,
   ) {}
 
   async signup(email: string, password: string) {
@@ -77,4 +79,17 @@ export class AuthService {
       }),
     };
   }
+
+
+
+async sendMail() {
+  this.mailerService.sendMail({
+    to:'ahmed.h.mohamed98@gmail.com',
+    from: 'eng.tarek.yahiia@gmail.com',
+    subject: 'complete signup by verifying Email your email',
+    text: '',
+    html: '<h1>Welcome ahmed</h1>',
+  })
+}
+
 }

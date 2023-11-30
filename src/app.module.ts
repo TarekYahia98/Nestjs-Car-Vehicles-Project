@@ -28,7 +28,7 @@ const cookieSession = require('cookie-session');
     }),
     UsersModule,
     ReportsModule,
-  ],
+ ],
   controllers: [AppController],
   providers: [AppService],
 })

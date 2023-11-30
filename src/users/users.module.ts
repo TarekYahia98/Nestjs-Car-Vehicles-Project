@@ -9,6 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { LocalStrategy } from './strategies/local-strategy';
 import { JwtStrategy } from './strategies/jwt-strategy';
 import { RefreshJwtStrategy } from './strategies/refresh-token.strategy';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
   imports: [
@@ -18,6 +19,16 @@ import { RefreshJwtStrategy } from './strategies/refresh-token.strategy';
       // secret: process.env.jwt_secret,
       signOptions: { expiresIn: '300s' },
     }),
+    MailerModule.forRoot({
+      transport: {
+        service: 'gmail',
+        secure: true,
+        auth: {
+          user: 'eng.tarek.yahiia@gmail.com', //generated ethereal user From My Account
+          pass: 'digs gzhn edps tvxi', //generated ethereal password From Gmail (Auto-generated) To Send Emails
+        },
+      },
+    }),
   ],
   providers: [
     UsersService,
@@ -25,6 +36,7 @@ import { RefreshJwtStrategy } from './strategies/refresh-token.strategy';
     LocalStrategy,
     JwtStrategy,
     RefreshJwtStrategy,
+
     // { provide: APP_INTERCEPTOR, useClass: CurrentUserInterceptor },
   ],
   controllers: [UsersController],
