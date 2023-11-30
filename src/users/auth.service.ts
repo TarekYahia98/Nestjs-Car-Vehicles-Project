@@ -80,16 +80,14 @@ export class AuthService {
     };
   }
 
-
-
-async sendMail() {
-  this.mailerService.sendMail({
-    to:'tarek.yahia.20080@gmail.com',
-    from: 'eng.tarek.yahiia@gmail.com',
-    subject: 'complete signup by verifying Email your email',
-    text: '',
-    html: '<h1>Welcome Eng.Tarek Yahia Abo Eldahab</h1>',
-  })
-}
-
+  async sendMail() {
+    this.mailerService.sendMail({
+      to: 'tarek.yahia.20080@gmail.com',
+      from: 'eng.tarek.yahiia@gmail.com',
+      subject: 'complete signup by verifying Email your email',
+      text: '',
+      html: `<p>Please click on verify email button to complete your signup</p>
+    <button> <a href="localhost:3000/Tarek-CarV-API/auth/signin" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 22px; color: 	#454B1B; text-decoration: none; border-radius: 8px;">Verify Email `,
+    });
+  }
 }
