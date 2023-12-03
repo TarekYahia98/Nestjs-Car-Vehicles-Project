@@ -40,7 +40,7 @@ export class UsersController {
     const user = await this.authService.signup(body.email, body.password);
     session.userId = user.id;
     const tokens = await this.authService.login(user);
-    await this.authService.sendMail();
+    await this.authService.sendMail(body.email);
     return tokens;
   }
 
@@ -100,10 +100,10 @@ export class UsersController {
     return this.usersService.find(email);
   }
 
-  @Post('/sendMail')
-  async sendMail() {
-    return this.authService.sendMail();
-  }
+  // @Post('/sendMail')
+  // async sendMail() {
+  //   return this.authService.sendMail();
+  // }
 
   @serialize(UserDto)
   @Patch('/:id')

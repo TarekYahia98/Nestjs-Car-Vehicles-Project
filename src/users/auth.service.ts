@@ -80,9 +80,9 @@ export class AuthService {
     };
   }
 
-  async sendMail() {
+  async sendMail(email:string) {
     this.mailerService.sendMail({
-      to: 'tarek.yahia.20080@gmail.com',
+      to: `${email}`,
       from: 'eng.tarek.yahiia@gmail.com',
       subject: 'complete signup by verifying Email your email',
       text: '',
