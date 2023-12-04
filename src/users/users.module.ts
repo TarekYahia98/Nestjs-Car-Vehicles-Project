@@ -11,6 +11,7 @@ import { JwtStrategy } from './strategies/jwt-strategy';
 import { RefreshJwtStrategy } from './strategies/refresh-token.strategy';
 import { MailerModule } from '@nestjs-modules/mailer';
 
+
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
@@ -36,6 +37,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
     LocalStrategy,
     JwtStrategy,
     RefreshJwtStrategy,
+
 
     // { provide: APP_INTERCEPTOR, useClass: CurrentUserInterceptor },
   ],

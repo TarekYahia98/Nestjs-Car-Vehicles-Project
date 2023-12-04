@@ -25,6 +25,8 @@ import { JwtGuard } from '../guards/jwt-auth.guard';
 import { RefreshJwtGuard } from '../guards/refresh-token.guard';
 import { tokensDto } from './dtos/tokens-dto';
 
+
+
 @Controller('auth')
 //  @UseInterceptors(new SerializeInterceptor(UserDto))
 // @serialize(UserDto)
@@ -53,9 +55,24 @@ export class UsersController {
     return tokens;
   }
 
+  @Post('/resetPassword')
+  async resetPassword(@Body() body:{newPassword :string}, @Request() req: { headers: { authorization: string; }; }){
+  const user = await this.authService.resetPassword(body, req);
+  return user;
+  }
+
+  @Post('/forgetPassword')
+  async forgetPassword(@Query('email') email:string){
+  const user = await this.usersService.find(email);
+    await this.authService.sendMail(email);
+    const token = await this.authService.forgetPassword(email);
+    return token;
+  }
+
+
   @UseGuards(RefreshJwtGuard)
   @Post('/refreshToken')
-  async getRefreshToken(@Request() req) {
+  async getRefreshToken(@Request() req): Promise<{ accessToken: string; refreshToken: string; }> {
     return this.authService.refreshToken(req.user);
   }
 
@@ -100,6 +117,7 @@ export class UsersController {
     return this.usersService.find(email);
   }
 
+  // Test For Using Nodemailer
   // @Post('/sendMail')
   // async sendMail() {
   //   return this.authService.sendMail();
