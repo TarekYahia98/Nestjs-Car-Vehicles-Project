@@ -23,8 +23,12 @@ export class UsersService {
     return this.userRepo.findOneBy({ id });
   }
 
-  find(email: string) {
-    return this.userRepo.find({ where: { email } });
+  async find(email: string) {
+    const user = await this.userRepo.find({ where: { email } });
+    if (user.length === 0) {
+      throw new NotFoundException('Email is Not Found');
+    }
+    return user;
   }
 
   async findUsers() {
