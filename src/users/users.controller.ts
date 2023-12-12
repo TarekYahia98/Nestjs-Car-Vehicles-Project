@@ -24,9 +24,10 @@ import { AuthGuard } from '../guards/auth.guard';
 import { JwtGuard } from '../guards/jwt-auth.guard';
 import { RefreshJwtGuard } from '../guards/refresh-token.guard';
 import { tokensDto } from './dtos/tokens-dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 
-
+@ApiTags('User')
 @Controller('auth')
 //  @UseInterceptors(new SerializeInterceptor(UserDto))
 // @serialize(UserDto)
@@ -81,6 +82,7 @@ export class UsersController {
   //   return this.usersService.findOne(session.userId);
   // }
 
+  @ApiBearerAuth()
   @serialize(UserDto)
   @UseGuards(JwtGuard)
   @Get('/users')
