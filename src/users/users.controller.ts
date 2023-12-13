@@ -56,6 +56,7 @@ export class UsersController {
     return tokens;
   }
 
+  @ApiBearerAuth()
   @Post('/resetPassword')
   async resetPassword(@Body() body:{newPassword :string}, @Request() req: { headers: { authorization: string; }; }){
   const user = await this.authService.resetPassword(body, req);
@@ -70,7 +71,7 @@ export class UsersController {
     return token;
   }
 
-
+  @ApiBearerAuth()
   @UseGuards(RefreshJwtGuard)
   @Post('/refreshToken')
   async getRefreshToken(@Request() req): Promise<{ accessToken: string; refreshToken: string; }> {
