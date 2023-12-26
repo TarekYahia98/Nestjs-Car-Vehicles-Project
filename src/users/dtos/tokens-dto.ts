@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
 
@@ -13,8 +14,10 @@ export class tokensDto {
  admin: Boolean;
 
  @Expose()
- accessToken: String;
+  @ApiProperty({ type: String, description: "accessToken"})
+  accessToken: String;
 
- @Expose()
- refreshToken: String;
+  @Expose()
+  @ApiProperty({ type: String, description: "refreshToken"})
+  refreshToken: String;
 }
